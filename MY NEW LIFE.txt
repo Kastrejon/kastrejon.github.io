@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Decisiones</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="story"></div>
+        <div id="options"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+#game-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#story {
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+#options button {
+    margin: 10px;
+}
+const storyElement = document.getElementById('story');
+const optionsElement = document.getElementById('options');
+
+const storyData = [
+    {
+        text: 'Te encuentras en un camino en el bosque. ¿Qué camino eliges?',
+        options: [
+            { text: 'Tomar el camino izquierdo', nextIndex: 1 },
+            { text: 'Tomar el camino derecho', nextIndex: 2 }
+        ]
+    },
+    {
+        text: 'Encuentras un lago. ¿Qué haces?',
+        options: [
+            { text: 'Nadar en el lago', nextIndex: 3 },
+            { text: 'Continuar caminando', nextIndex: 4 }
+        ]
+    },
+    {
+        text: 'Encuentras una cueva. ¿Qué haces?',
+        options: [
+            { text: 'Entrar en la cueva', nextIndex: 5 },
+            { text: 'Ignorar la cueva', nextIndex: 6 }
+        ]
+    },
+    {
+        text: 'Disfrutas nadando en el lago.',
+        options: [
+            { text: 'Volver al inicio', nextIndex: 0 }
+        ]
+    },
+    {
+        text: 'Continúas caminando por el bosque.',
+        options: [
+            { text: 'Volver al inicio', nextIndex: 0 }
+        ]
+    },
+    {
+        text: 'Dentro de la cueva encuentras un tesoro.',
+        options: [
+            { text: 'Volver al inicio', nextIndex: 0 }
+        ]
+    },
+    {
+        text: 'Ignoras la cueva y continúas caminando.',
+        options: [
+            { text: 'Volver al inicio', nextIndex: 0 }
+        ]
+    }
+];
+
+let currentStoryIndex = 0;
+
+function displayStory(storyIndex) {
+    const story = storyData[storyIndex];
+    storyElement.innerText = story.text;
+    optionsElement.innerHTML = '';
+
+    story.options.forEach(option => {
+        const button = document.createElement('button');
+        button.innerText = option.text;
+        button.addEventListener('click', () => {
+            currentStoryIndex = option.nextIndex;
+            displayStory(currentStoryIndex);
+        });
+        optionsElement.appendChild(button);
+    });
+}
+
+// Start the game
+displayStory(currentStoryIndex);
